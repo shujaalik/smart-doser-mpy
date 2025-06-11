@@ -51,6 +51,7 @@ class BLE():
         ((self.tx, self.rx,), ) = self.ble.gatts_register_services(SERVICES)
 
     def send(self, data):
+        print("Send: ", data)
         if type(data).__name__ == "list":
             self.ble.gatts_notify(0, self.tx, "START")
             sleep_ms(100)

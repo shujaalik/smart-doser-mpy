@@ -9,5 +9,6 @@ STEPS = const(200)
 
 SPEED = const(100)
 
+DEVICE_NAME = const("doser225")
+
 STEPS_EACH_ML = const(100)
-DEVICE_NAME = const("SMART DOSER")
