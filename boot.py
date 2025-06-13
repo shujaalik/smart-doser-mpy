@@ -18,6 +18,7 @@ def ble_handler(cmd):
         prev_message = prev_message + cmd.replace("&", "")
         cmd = prev_message
         prev_message = None
+    print(cmd)
     cmd = json.loads(cmd)
     print("Got Message: ", cmd)
     if cmd["action"] == "SYNC":
@@ -30,5 +31,11 @@ def ble_handler(cmd):
         bt.send("ACK")
         rotations = int(cmd["data"])
         doser.rotate(rotations)
+    elif cmd["action"] == "STOP":
+        bt.send("ACK")
+        doser.stop()
+    elif cmd["action"] == "RUN_PROGRAM":
+        bt.send("ACK")
+        doser.run_schedule(cmd["data"]["dose"], cmd["data"]["interval"], cmd["data"]["intervalValue"])
 
 bt = BLE(DEVICE_NAME, ble_handler)
