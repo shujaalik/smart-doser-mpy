@@ -12,3 +12,6 @@ SPEED = const(100)
 DEVICE_NAME = const("doser225")
 
 STEPS_EACH_ML = const(100)
+
+SSID = const("industrialpmr")
+PASS = const("kunjisoftadmin")

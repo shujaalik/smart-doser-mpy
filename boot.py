@@ -1,9 +1,7 @@
-from doser import Doser
 from bt import BLE
+from wifi import Wifi
 from constants import DEVICE_NAME
-import json
-
-doser = Doser()
+from actor import act
 
 prev_message = None
 def ble_handler(cmd):
@@ -19,23 +17,7 @@ def ble_handler(cmd):
         cmd = prev_message
         prev_message = None
     print(cmd)
-    cmd = json.loads(cmd)
-    print("Got Message: ", cmd)
-    if cmd["action"] == "SYNC":
-        bt.send("ACK")
-    elif cmd["action"] == "INSERT_DOSE":
-        bt.send("ACK")
-        dose = float(cmd["data"])
-        doser.insert_dose(dose)
-    elif cmd["action"] == "ROTATE":
-        bt.send("ACK")
-        rotations = int(cmd["data"])
-        doser.rotate(rotations)
-    elif cmd["action"] == "STOP":
-        bt.send("ACK")
-        doser.stop()
-    elif cmd["action"] == "RUN_PROGRAM":
-        bt.send("ACK")
-        doser.run_schedule(cmd["data"]["dose"], cmd["data"]["interval"], cmd["data"]["intervalValue"])
+    act(cmd, bt.send)
 
 bt = BLE(DEVICE_NAME, ble_handler)
+wifi = Wifi()
